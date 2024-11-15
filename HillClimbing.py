@@ -15,11 +15,16 @@ def hill_climbing(problem, start, goal):
             print("No path found")
             break
 
-        current_node = min(neighbours, key=lambda node: heuristic_function(node.position, goal.position))
-        path.append(current_node.position)
+        next_node = min(neighbours, key=lambda node: heuristic_function(node.position, goal.position))
+        path.append(next_node.position)
 
         if current_node == goal:
             break
+
+        if heuristic_function(next_node.position, goal.position) >= heuristic_function(current_node.position,
+                                                                                            goal.position):
+            print("Stuck in local maximum.")
+            return path
 
     return path
 
