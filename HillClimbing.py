@@ -5,28 +5,30 @@ import matplotlib.pyplot as plt
 
 def hill_climbing(problem, start, goal):
     current_node = problem[start]
-    goal = problem[goal]
+    goal_node = problem[goal]
     path = [current_node.position]
 
-    while current_node != goal:
-        neighbours = current_node.children
+    while current_node.position != goal_node.position:
+        neighbours = []
+        for neighbour in current_node.children:
+            if neighbour.go:
+                neighbours.append(neighbour)
 
         if not neighbours:
             print("No path found")
-            break
-
-        next_node = min(neighbours, key=lambda node: heuristic_function(node.position, goal.position))
-        path.append(next_node.position)
-
-        if current_node == goal:
-            break
-
-        if heuristic_function(next_node.position, goal.position) >= heuristic_function(current_node.position,
-                                                                                            goal.position):
-            print("Stuck in local maximum.")
             return path
 
+        next_node = min(neighbours, key=lambda node: heuristic_function(node.position, goal_node.position))
+
+        if heuristic_function(next_node.position, goal_node.position) >= heuristic_function(current_node.position, goal_node.position):
+            print("Stuck in local maximum")
+            return path
+
+        current_node = next_node
+        path.append(current_node.position)
+
     return path
+
 
 def visualize_path(grid, path, start, goal):
     max_row = max(key[0] for key in grid) + 1
@@ -58,17 +60,17 @@ def visualize_path(grid, path, start, goal):
     plt.show()
 
 
-grid = tree_creation(40, 40)
-print("Tree created successfully")
+maze, goal = tree_creation(40, 40)
+print(f"Goal placed at: {goal}")
 
-grid_with_obstacles = building(grid, 40, 40)
-print("Obstacles added successfully")
+maze_with_obstacles = building(maze, 40, 40)
 
-assign_cost(grid_with_obstacles, 40, 40)
-grid_with_costs = grid_with_obstacles
+assign_cost(maze_with_obstacles, 40, 40)
+grid_with_costs = maze_with_obstacles
+
 start = (0, 0)
-goal = (9, 39)
 
 path = hill_climbing(grid_with_costs, start, goal)
+print(f"Path found: {path}")
 
 visualize_path(grid_with_costs, path, start, goal)

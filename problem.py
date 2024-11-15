@@ -32,33 +32,34 @@ def tree_creation(row, col):
                     (i, j - 1), #above
                     (i + 1, j), #right
                     (i - 1, j), #left
-                    (i - 1, j - 1), # top-left diagonal
-                    (i - 1, j + 1), # bottom-left diagonal
-                    (i + 1, j - 1), # top-right diagonal
-                    (i + 1, j + 1) # bottom-right diagonal
+                    (i - 1, j - 1),  # top-left diagonal
+                    (i - 1, j + 1),  # bottom-left diagonal
+                    (i + 1, j - 1),  # top-right diagonal
+                    (i + 1, j + 1)  # bottom-right diagonal
                 ]
-                for nx, ny in neighbors: #check limits of x and y
+                for nx, ny in neighbors:
                     if 0 <= nx < row and 0 <= ny < col:
                         neighbor_node = tree[(nx, ny)]
                         if neighbor_node.go:
                             node.children.append(neighbor_node)
 
     tree[0,0].start = True
+    goal_position = None
     while True:
-        goal_position = (randint(0, row - 1), randint(0, col - 1))
-        if goal_position != (0, 0):  # Ensure the goal is not at the start
+        rand_x, rand_y = randint(0, row - 1), randint(0, col - 1)
+        if (rand_x, rand_y) != (0, 0):
+            goal_position = (rand_x, rand_y)
+            tree[goal_position].goal = True
             break
-    tree[goal_position].goal = True
 
-    return tree
+    return tree, goal_position
 
 def building(tree, row, col): #the obstacle
     building_count = 0
     building_per = int(0.1 *(row * col)) #160 building
 
     while building_count < building_per:
-        i = randint(0, row - 1) #3shan (0, 0) heya el start
-        j = randint(0, col - 1)
+        i, j = randint(0, row - 1), randint(0, col - 1)
         building_node = tree[(i, j)]
 
         if building_node.go and not building_node.goal and not building_node.start:
@@ -74,3 +75,4 @@ def assign_cost(tree, row, col):
             node = tree[(i, j)]
             if node.go and not node.goal and not node.start:
                 node.path_cost = choice([1, 2]) #1 -> tree, 2 -> car
+    return tree
