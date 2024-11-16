@@ -1,7 +1,7 @@
 from collections import deque
 
 from problem import *
-def bfs(tree, start, goal, row, col):
+def dfs(tree, start, goal, row, col):
  
     frontier = [tree[start]]
     visited = set() 
