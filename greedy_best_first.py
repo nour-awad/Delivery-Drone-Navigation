@@ -27,6 +27,9 @@ def Greedy_best_firsy_search(tree, start_position, goal_position, h=None, verbos
 
         explored.add(node.position)
         for child in node.children:
+            if not child.go:
+            #avoid obsticles
+                continue
 
             f = h(child.position, goal_position)
             child.heuristic = f  
