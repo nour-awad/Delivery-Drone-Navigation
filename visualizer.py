@@ -26,6 +26,11 @@ class Visualizer:
             _visualizers.get(type(self.problem), _default_visualizer)(self.problem, node)
         print('-' * terminal_width)
 
+    
+    def visualize_state(self, state):
+        """Visualizes the state."""
+        print(state)  # Or any other suitable visualization logic for the state
+
 def node_visualizer(_, node):
     print(f'Position: {node.position}, Path Cost: {node.path_cost}, Heuristic: {node.heuristic}, Goal: {node.goal}, Start: {node.start}, Go: {node.go}')
 
