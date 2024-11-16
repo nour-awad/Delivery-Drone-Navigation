@@ -10,12 +10,12 @@ def bfs(tree, start, goal, row, col):
 
     visited.add(start)
     tree[start].parent = None
+    path = []
 
     while frontier:
         node = frontier.popleft()
 
         if node.position == goal:
-            path = []
             while node is not None:
                 path.append(node.position)
                 node = node.parent
@@ -33,4 +33,4 @@ def bfs(tree, start, goal, row, col):
         max_fsize = max(max_fsize, len(frontier))
 
     # when no path
-    return None, max_fsize
+    return path, max_fsize
