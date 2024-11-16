@@ -1,20 +1,17 @@
-def Greedy_best_firsy_search(tree, start_position, goal_position, h=None, verbose=False):
-    """Greedy Best-First Search with optional verbose output."""
+from A_star import *
+
+def greedy_best_first_search(tree, start_position, goal_position, h=None, verbose=False):
     if h is None:
         h = heuristic
-    #defining the heuristic in GBFS
 
     start_node = tree[start_position]
-    # the initial state (starting point)
 
     start_node.heuristic = h(start_node.position, goal_position)
 
     frontier = [(start_node.heuristic, 0, start_node)] 
-    # Priority queue ordered by (f(n), tiebreaker, node)
 
     explored = set()
     max_frontier_size = 1  
-    # Track the maximum size of the frontier
 
     if verbose:
         print("Starting Greedy Best-First Search ----->> ")
@@ -23,12 +20,11 @@ def Greedy_best_firsy_search(tree, start_position, goal_position, h=None, verbos
         _, _, node = heappop(frontier)
         if node.goal:
             return solution(node), max_frontier_size
-            #check if the current node(state) is the goal
 
         explored.add(node.position)
         for child in node.children:
             if not child.go:
-            #avoid obsticles
+            #avoid obstacles
                 continue
 
             f = h(child.position, goal_position)
