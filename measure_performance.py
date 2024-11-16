@@ -1,46 +1,53 @@
 from time import time
+from A_star import *
+from greedy_best_first import *
+def measure_performance(search_algorithm, problem, start_position, goal_position, verbose=False):
 
-def measure_performance(search_algorithm, problem, start_position, goal_position, verbose=False, **kwargs):
     start_time = time()
 
-    solution_result, max_frontier_size = search_algorithm(
-        problem, start_position, goal_position, verbose=verbose, **kwargs
-    )
+    solution_result, max_frontier_size = search_algorithm(problem, start_position, goal_position, verbose=verbose)
 
     elapsed_time = time() - start_time
 
     return {
-        'algorithm': search_algorithm.__name__,
         'solution': solution_result,
         'elapsed_time': elapsed_time,
         'max_frontier_size': max_frontier_size
     }
 
 
-def evaluate_algorithms(algorithms, tree, start_position, goal_position, verbose=False, **kwargs):
+def astar_performance(tree, start_position, goal_position, verbose=False):
+    performance = measure_performance(astar_search, tree, start_position, goal_position, verbose=verbose)
 
-    results = []
+    solution = performance['solution']
+    elapsed_time = performance['elapsed_time']
+    max_frontier_size = performance['max_frontier_size']
 
-    for algorithm in algorithms:
-        print(f"\nEvaluating {algorithm.__name__}...")
-        performance = measure_performance(
-            algorithm, tree, start_position, goal_position, verbose=verbose, **kwargs
-        )
+    print("A* Search Performance:")
+    print(f"Solution: {solution}")
+    print(f"Elapsed Time: {elapsed_time:.4f} seconds")
+    print(f"Max Frontier Size: {max_frontier_size}")
 
-        algorithm_name = performance['algorithm']
-        solution = performance['solution']
-        elapsed_time = performance['elapsed_time']
-        max_frontier_size = performance['max_frontier_size']
-        total_nodes = len(tree)
+    total_nodes = len(tree)
+    explored_percentage = (max_frontier_size / total_nodes) * 100
+    print(f"Explored Nodes Percentage: {explored_percentage:.2f}%")
 
-        explored_percentage = (max_frontier_size / total_nodes) * 100
+    return performance
 
-        print(f"{algorithm_name} Performance:")
-        print(f"Solution: {solution}")
-        print(f"Elapsed Time: {elapsed_time:.4f} seconds")
-        print(f"Max Frontier Size: {max_frontier_size}")
-        print(f"Explored Nodes Percentage: {explored_percentage:.2f}%\n")
+def gbfs_performance(tree, start_position, goal_position, verbose=False):
+    performance = measure_performance(greedy_best_first_search, tree, start_position, goal_position, verbose=verbose)
 
-        results.append(performance)
+    solution = performance['solution']
+    elapsed_time = performance['elapsed_time']
+    max_frontier_size = performance['max_frontier_size']
 
-    return results
+    print("Greedy Best-First Search Performance:")
+    print(f"Solution: {solution}")
+    print(f"Elapsed Time: {elapsed_time:.4f} seconds")
+    print(f"Max Frontier Size: {max_frontier_size}")
+
+    total_nodes = len(tree)
+    explored_percentage = (max_frontier_size / total_nodes) * 100
+    print(f"Explored Nodes Percentage: {explored_percentage:.2f}%")
+
+    return performance
