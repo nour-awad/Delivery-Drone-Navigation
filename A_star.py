@@ -27,6 +27,9 @@ def astar_search(tree, start_position, goal_position, h=None, verbose=False):
         explored.add(node.position)
         # adds the node to the explored Q
         for child in node.children:
+            if not child.go:
+            # avoid obsticle
+                continue
             f = node.path_cost + h(child.position, goal_position)
             # F(n) = h(n) + Path cost
             child.heuristic = f  
