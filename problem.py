@@ -10,6 +10,7 @@ class Node:
         self.go = True #is there an obstacle or not
         self.path_cost = path_cost
         self.heuristic = None
+        self.parent=None
 
     def __lt__(self, other):
         return self.heuristic < other.heuristic
@@ -56,7 +57,7 @@ def tree_creation(row, col):
 
 def building(tree, row, col): #the obstacle
     building_count = 0
-    building_per = int(0.1 *(row * col)) #160 building
+    building_per = int(0.17 *(row * col)) #160 building
 
     while building_count < building_per:
         i, j = randint(0, row - 1), randint(0, col - 1)
