@@ -46,7 +46,7 @@ def visualize_path(grid, path, start, goal):
     grid_array[start[0], start[1]] = 3
     grid_array[goal[0], goal[1]] = 4
 
-    cmap = plt.cm.get_cmap('Pastel1_r', 5)
+    cmap = plt.cm.get_cmap('Blues', 5)
     bounds = [0, 1, 2, 3, 4]
     norm = plt.Normalize(vmin=0, vmax=4)
 
