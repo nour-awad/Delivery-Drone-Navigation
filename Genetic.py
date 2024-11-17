@@ -62,3 +62,4 @@ def genetic_algorithm(population, fitness_fn, grid, start, goal, gene_pool, f_th
             print(f"Solution found at generation {i + 1}")
             return fittest_individual
     return max(population, key=lambda ind: fitness_fn(ind, grid, start, goal))
+

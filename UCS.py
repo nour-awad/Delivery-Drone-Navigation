@@ -30,3 +30,4 @@ def ucs(grid, start, goal, row, col):
         max_frontier_size = max(max_frontier_size, len(frontier))
 
     return None, max_frontier_size, float('inf')
+

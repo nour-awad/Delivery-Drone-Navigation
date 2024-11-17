@@ -80,3 +80,4 @@ def assign_cost(tree, row, col):
             if node.go and not node.goal and not node.start:
                 node.path_cost = choice([1, 2]) #1 -> tree, 2 -> car
     return tree
+
