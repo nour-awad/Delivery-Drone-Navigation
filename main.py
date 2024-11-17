@@ -4,6 +4,7 @@ from SimulatedAnnealing import *
 from greedy_best_first import *
 from visualizer import *
 from measure_performance import *
+from IDS import *
 
 def main():
     maze, goal = tree_creation(40, 40)
@@ -25,6 +26,11 @@ def main():
     dfs_, max_frontier = dfs(grid_with_costs, start, goal, 40, 40)
     print(f"DFS Path: {dfs_}")
     visualize_path(grid_with_costs, dfs_, start, goal, "Depth First Search")
+
+    #IDS
+    ids_, max_front = ids(grid_with_costs, start, goal, 40, 40, 1000)
+    print(f"IDS Path: {ids_}")
+    visualize_path(grid_with_costs, dfs_, start, goal, "Iterative Deepining Search")
 
     '''
     Informed Search
