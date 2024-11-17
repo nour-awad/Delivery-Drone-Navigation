@@ -9,11 +9,13 @@ class Node:
         self.children = []
         self.go = True #is there an obstacle or not
         self.path_cost = path_cost
-        self.heuristic = None
+        self.heuristic = float("inf")
         self.parent=None
         self.cost = float("inf")
 
     def __lt__(self, other):
+        if self.heuristic is None or other.heuristic is None:
+            return False
         return self.heuristic < other.heuristic
 
 
