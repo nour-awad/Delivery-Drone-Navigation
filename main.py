@@ -1,3 +1,5 @@
+import tracemalloc
+
 from BFS import *
 from DFS import *
 from Genetic import *
@@ -22,6 +24,7 @@ def main():
     '''
     #BFS
     t_bfs = time.time()
+    tracemalloc.start()
     bfs_, max_fsize = bfs(grid_with_costs, start, goal, 40, 40)
     t_bfs2 = time.time()
     print(f"BFS Path: {bfs_}")
